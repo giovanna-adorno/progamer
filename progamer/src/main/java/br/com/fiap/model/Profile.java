@@ -1,6 +1,7 @@
 package br.com.fiap.model;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -60,6 +61,11 @@ public class Profile {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	public String getFormatedDate() {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		return this.birthDate.format(formatter);
 	}
 
 	@Override
