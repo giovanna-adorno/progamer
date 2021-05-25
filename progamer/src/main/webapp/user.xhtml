@@ -12,41 +12,60 @@
 
 		<p:card class="card-form">
 			<f:facet name="title">
-	        New Setup
+	        New User
 	    </f:facet>
 			<h:form>
 				<div class="ui-fluid p-formgrid p-grid">
+				
 					<div class="p-field p-grid">
 						<label for="name" class="p-col-fixed" style="width: 100px">Name</label>
 						<div class="p-col">
-							<p:inputText id="name" value="#{setupBean.setup.name}" required="true">
+							<p:inputText id="name" value="#{userBean.user.name}" required="true">
 								<f:ajax event="blur" render="messages"  />
 							</p:inputText>
 						</div>
 					</div>
+
 					<div class="p-field p-grid">
-						<label for="description" class="p-col-fixed" style="width: 100px">Description</label>
+						<label for="birthday" class="p-col-fixed" style="width: 100px">Birthday</label>
 						<div class="p-col">
-							<p:inputTextarea id="description" value="#{setupBean.setup.description}">
-								<f:validateLength minimum="50" maximum="255" />
+							<p:calendar 
+								id="birthday" 
+								value="#{userBean.user.birthday}" 
+								required="true"
+								showOn="button"
+								mask="dd/MM/yyyy"
+							>
 								<f:ajax event="blur" render="messages"  />
-							</p:inputTextarea>
+							</p:calendar>
 						</div>
 					</div>
+					
 					<div class="p-field p-grid">
-						<label for="price" class="p-col-fixed" style="width: 100px">Price</label>
+						<label for="email" class="p-col-fixed" style="width: 100px">E-mail</label>
 						<div class="p-col">
-							<p:inputText id="price" value="#{setupBean.setup.price}" required="true">
-								<f:validateDoubleRange minimum="0" />
+							<p:inputText id="email" value="#{userBean.user.email}" required="true" validatorMessage="E-mail inválido">
+								<f:validateRegex pattern="([^.@]+)(\.[^.@]+)*@([^.@]+\.)+([^.@]+)" />
 								<f:ajax event="blur" render="messages"  />
 							</p:inputText>
 						</div>
 					</div>
+
+					<div class="p-field p-grid">
+						<label for="password" class="p-col-fixed" style="width: 100px">Password</label>
+						<div class="p-col">
+							<p:password id="password" value="#{userBean.user.password}" required="true" feedback="true" toggleMask="true">
+								<f:ajax event="blur" render="messages"  />
+							</p:password>
+						</div>
+					</div>
+
+
 				</div>
 			</h:form>
 
 			<f:facet name="footer">
-				<p:commandButton icon="pi pi-check" value="Save" action="#{setupBean.save}">
+				<p:commandButton icon="pi pi-check" value="Save" action="#{userBean.save}">
 					<f:ajax execute="@form" render="messages"  />
 				</p:commandButton>
 				<p:commandButton icon="pi pi-times" value="Cancel"
@@ -57,16 +76,21 @@
 		
 		<div class="card">
 		    <h:form id="form">
-		        <p:dataTable id="setups" var="setup" value="#{setupBean.setupsByUser}">
+		        <p:dataTable id="users" var="user" value="#{userBean.users}">
 		            <f:facet name="header">
-		                My Setup List
+		                User List
 		            </f:facet>
 		
-		            <p:column headerText="Name">
-		                <h:outputText value="#{setup.name}" />
+		            <p:column headerText="User">
+		                <h:outputText value="#{user.name}" />
 		            </p:column>
-		            <p:column headerText="Price">
-		                <h:outputText value="#{setup.price}" />
+		            <p:column headerText="Birthday">
+		                <h:outputText value="#{user.birthday}">
+		                	<f:convertDateTime dateStyle="short" locale="pt_BR" />
+		                </h:outputText>
+		            </p:column>
+		            <p:column headerText="E-mail">
+		                <h:outputText value="#{user.email}" />
 		            </p:column>
 		        </p:dataTable>
 		   	</h:form>
